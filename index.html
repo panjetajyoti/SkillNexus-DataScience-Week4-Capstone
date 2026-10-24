@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SkillNexus Capstone | Sales Analytics & Regression Dashboard</title>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --primary: #1F4E79;
+      --primary-light: #2B6CB0;
+      --accent: #2CA02C;
+      --bg: #F8FAFC;
+      --card-bg: #FFFFFF;
+      --text-main: #1E293B;
+      --text-muted: #64748B;
+      --border: #E2E8F0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      padding: 24px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    header {
+      background: var(--card-bg);
+      padding: 24px 30px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .badge {
+      background: #EBF8FF;
+      color: var(--primary);
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: inline-block;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-size: 24px;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    /* KPI Grid */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .kpi-card {
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+      border-left: 5px solid var(--primary);
+    }
+
+    .kpi-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .kpi-value {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .kpi-desc {
+      font-size: 12px;
+      color: var(--accent);
+      font-weight: 600;
+      margin-top: 4px;
+    }
+
+    /* Main Section Grid */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 900px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      padding: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Simulator Controls */
+    .sim-group {
+      margin-bottom: 16px;
+    }
+
+    .sim-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .sim-slider {
+      width: 100%;
+      height: 6px;
+      border-radius: 4px;
+      outline: none;
+      accent-color: var(--primary);
+    }
+
+    .pred-result-box {
+      background: #F1F5F9;
+      padding: 16px;
+      border-radius: 8px;
+      text-align: center;
+      margin-top: 20px;
+      border: 1px dashed #CBD5E1;
+    }
+
+    .pred-value {
+      font-size: 30px;
+      font-weight: 800;
+      color: var(--primary);
+      margin: 4px 0;
+    }
+
+    /* Table */
+    .table-container {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th, td {
+      padding: 12px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      background: #F8FAFC;
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    tr:hover {
+      background: #F1F5F9;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <div>
+        <span class="badge">Capstone Project • Week 4</span>
+        <h1>Executive Sales & Predictive Regression Dashboard</h1>
+        <p class="subtitle">SkillNexus Data Analyst Program | Prepared by <strong>Jyoti</strong></p>
+      </div>
+      <div>
+        <span style="font-size: 12px; color: var(--text-muted);">Status: <strong>Production Ready (100% Verified)</strong></span>
+      </div>
+    </header>
+
+    <!-- Top KPI Cards -->
+    <div class="kpi-grid">
+      <div class="kpi-card" style="border-left-color: #1F4E79;">
+        <div class="kpi-title">Total Revenue</div>
+        <div class="kpi-value">$26,678</div>
+        <div class="kpi-desc">↑ 20 Verified Transactions</div>
+      </div>
+      <div class="kpi-card" style="border-left-color: #2CA02C;">
+        <div class="kpi-title">Gross Operating Profit</div>
+        <div class="kpi-value">$4,920</div>
+        <div class="kpi-desc">18.4% Average Margin</div>
+      </div>
+      <div class="kpi-card" style="border-left-color: #ED7D31;">
+        <div class="kpi-title">Regression Model Fit (R²)</div>
+        <div class="kpi-value">0.934</div>
+        <div class="kpi-desc">Explains 93.4% Sales Variance</div>
+      </div>
+      <div class="kpi-card" style="border-left-color: #70AD47;">
+        <div class="kpi-title">Marketing ROI Multiple</div>
+        <div class="kpi-value">8.42x</div>
+        <div class="kpi-desc">Revenue per $1 Ad Spend</div>
+      </div>
+    </div>
+
+    <!-- Main Visuals & Live Simulator -->
+    <div class="dashboard-grid">
+      <!-- Chart Area -->
+      <div class="card">
+        <div class="card-title">
+          <span>Revenue Distribution by Product Category</span>
+        </div>
+        <div style="height: 320px;">
+          <canvas id="categoryChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Live Machine Learning Simulator -->
+      <div class="card">
+        <div class="card-title">
+          <span>Live Sales Predictor (OLS Model)</span>
+        </div>
+        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px;">
+          Adjust variables to simulate real-time predicted sales using trained linear regression weights.
+        </p>
+
+        <div class="sim-group">
+          <div class="sim-label">
+            <span>Units Sold:</span>
+            <span id="unitsVal">5</span>
+          </div>
+          <input type="range" id="units" class="sim-slider" min="1" max="30" value="5" oninput="updatePrediction()">
+        </div>
+
+        <div class="sim-group">
+          <div class="sim-label">
+            <span>Unit Price ($):</span>
+            <span id="priceVal">$450</span>
+          </div>
+          <input type

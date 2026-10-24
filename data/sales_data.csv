@@ -1,0 +1,21 @@
+Transaction_ID,Date,Region,Category,Customer_Segment,Units_Sold,Unit_Price,Discount,Marketing_Spend,Sales,Profit
+TXN_1001,2024-01-05,North,Electronics,Consumer,4,250,0.05,120,950.0,180.5
+TXN_1002,2024-01-08,West,Furniture,Corporate,2,400,0.10,95,720.0,90.0
+TXN_1003,2024-01-12,East,Office Supplies,Home Office,10,25,0.00,45,250.0,65.0
+TXN_1004,2024-01-18,South,Electronics,Corporate,3,520,0.15,160,1326.0,210.0
+TXN_1005,2024-01-22,North,Technology,Corporate,5,600,0.08,210,2760.0,540.0
+TXN_1006,2024-02-02,East,Furniture,Consumer,1,350,0.05,80,332.5,45.0
+TXN_1007,2024-02-07,West,Electronics,Home Office,6,180,0.12,130,950.4,142.0
+TXN_1008,2024-02-14,South,Office Supplies,Consumer,15,18,0.00,50,270.0,72.0
+TXN_1009,2024-02-21,North,Technology,Consumer,2,1100,0.05,240,2090.0,410.0
+TXN_1010,2024-03-01,West,Furniture,Corporate,4,280,0.15,110,952.0,120.0
+TXN_1011,2024-03-11,East,Electronics,Corporate,8,140,0.10,140,1008.0,175.0
+TXN_1012,2024-03-18,South,Technology,Home Office,3,850,0.05,190,2422.5,480.0
+TXN_1013,2024-04-03,North,Office Supplies,Consumer,20,15,0.00,60,300.0,85.0
+TXN_1014,2024-04-12,West,Technology,Corporate,4,920,0.10,230,3312.0,620.0
+TXN_1015,2024-04-25,East,Furniture,Home Office,3,310,0.08,90,855.6,110.0
+TXN_1016,2024-05-04,South,Electronics,Consumer,5,320,0.12,150,1408.0,230.0
+TXN_1017,2024-05-15,North,Technology,Corporate,6,750,0.05,260,4275.0,810.0
+TXN_1018,2024-05-28,West,Office Supplies,Consumer,25,12,0.00,55,300.0,90.0
+TXN_1019,2024-06-08,East,Electronics,Home Office,4,410,0.15,170,1394.0,225.0
+TXN_1020,2024-06-20,South,Furniture,Corporate,5,290,0.10,120,1305.0,165.0
